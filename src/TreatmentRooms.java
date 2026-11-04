@@ -12,12 +12,12 @@ public class TreatmentRooms {
         }
 
         System.out.println(d.getName() + " acquired a treatment room.");
-        System.out.println(d.getName() + " begins treating " + p.getName() + ".");
+        System.out.println(d.getName() + " begins treating " + p.getId() + ".");
         return true;
     }
 
     public void releaseRoom(Patient p, Doctor d) {
-        System.out.println(d.getName() + " finished treating " + p.getName() + ".");
+        System.out.println(d.getName() + " finished treating " + p.getId() + ".");
         System.out.println(d.getName() + " released the treatment room.");
         availableRooms.V();
     }

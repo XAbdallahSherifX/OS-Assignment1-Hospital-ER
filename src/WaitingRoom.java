@@ -20,7 +20,7 @@ public class WaitingRoom {
         // No emptySeats.P() needed because we never gave up their seat!
         mutex.P();
         queue.add(p); // Or ((LinkedList<Patient>) queue).addFirst(p) to prioritize them
-        System.out.println(d.getName() + " is sending " + p.getName() + " back to the waiting room.");
+        System.out.println(d.getName() + " is sending " + p.getId() + " back to the waiting room.");
         mutex.V();
         waitingPatients.V(); // Signal that the patient is back in the queue
     }
@@ -28,11 +28,11 @@ public class WaitingRoom {
     // Producer: called by the patient thread
     public void enterRoom(Patient p) {
         if (emptySeats.getValue() <= 0) // only used for the log message
-            System.out.println(p.getName() + " is waiting for an available seat.");
+            System.out.println(p.getId() + " is waiting for an available seat.");
         emptySeats.P(); // blocks here, no recursion needed
         mutex.P();
         queue.add(p);
-        System.out.println(p.getName() + " entered the waiting room.");
+        System.out.println(p.getId() + " entered the waiting room.");
         mutex.V();
         waitingPatients.V();
     }
