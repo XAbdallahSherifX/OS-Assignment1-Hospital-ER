@@ -2,7 +2,9 @@ public class Patient implements Runnable {
 
     private int id;
     private WaitingRoom waitingRoom;
-    public Patient(){
+    public Patient(int id , WaitingRoom waitingroom ){
+        this.id=id;
+        this.waitingRoom=waitingroom;
         System.out.println("P" + id + " arrived.");
     }
 

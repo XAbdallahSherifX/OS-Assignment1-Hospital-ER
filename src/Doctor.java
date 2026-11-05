@@ -24,6 +24,9 @@ public class Doctor implements Runnable {
                 
                 //Remain idle until a patient is available, then take them
                 Patient p = waitingRoom.takePatient(this);
+                if (p == null) {
+                    break;
+                }
                 System.out.println(getName() + " is assigned to " + p.getId() + ".");
 
                 //Try to acquire a treatment room
@@ -40,6 +43,7 @@ public class Doctor implements Runnable {
                     //Become available for another patient
                     System.out.println(getName() + " is now available.");
                     System.out.println(p.getId() + " left.");
+                    Hospital.patientsFinished.incrementAndGet();
                 } else {
                     //Send the patient back to the waiting room if room acquisition timed out
                     waitingRoom.returnPatient(p, this);
