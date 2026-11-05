@@ -37,7 +37,6 @@ public class Doctor implements Runnable {
                     int treatmentTime = random.nextInt(3000) + 1000;
                     Thread.sleep(treatmentTime);
 
-                    //release treatment room
                     treatmentRooms.releaseRoom(p, this);
                     
                     //Become available for another patient
@@ -45,7 +44,7 @@ public class Doctor implements Runnable {
                     System.out.println(p.getId() + " left.");
                     Hospital.patientsFinished.incrementAndGet();
                 } else {
-                    //Send the patient back to the waiting room if room acquisition timed out
+                    //Send the patient back to the waiting room
                     waitingRoom.returnPatient(p, this);
                 }
             }
