@@ -12,14 +12,13 @@ public class WaitingRoom {
     }
 
     public void confirmSeatVacated() {
-        emptySeats.V(); // Now a new patient from outside can take the seat
+        emptySeats.V();
     }
 
-    // 3. Called by Doctor if treatment room acquisition times out
+    // Called by Doctor if treatment room acquisition times out
     public void returnPatient(Patient p, Doctor d) {
-        // No emptySeats.P() needed because we never gave up their seat!
         mutex.P();
-        queue.add(p); // Or ((LinkedList<Patient>) queue).addFirst(p) to prioritize them
+        queue.add(p); 
         System.out.println(d.getName() + " is sending " + p.getId() + " back to the waiting room.");
         mutex.V();
         waitingPatients.V(); // Signal that the patient is back in the queue
@@ -27,9 +26,11 @@ public class WaitingRoom {
 
     // Producer: called by the patient thread
     public void enterRoom(Patient p) {
-        if (emptySeats.getValue() <= 0) // only used for the log message
-            System.out.println(p.getId() + " is waiting for an available seat.");
-        emptySeats.P(); // blocks here, no recursion needed
+       if (emptySeats.getValue() <= 0) {
+        System.out.println("The waiting room is full.");
+        System.out.println(p.getId() + " is waiting outside for an available seat.");
+        }
+        emptySeats.P();
         mutex.P();
         queue.add(p);
         System.out.println(p.getId() + " entered the waiting room.");
